@@ -78,6 +78,7 @@
     <Compile Include="HentPatient.xaml.cs">
       <DependentUpon>HentPatient.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MachineLearning\PythonCaller.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

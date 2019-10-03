@@ -1,15 +1,9 @@
 ﻿using I7BAC.dto;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 
 namespace I7BAC
@@ -103,72 +97,14 @@ namespace I7BAC
 
             if (selectedRekvisition != null)
             {
-                pythonScript();
-
                 Aggregator.BroadCast(
                     selectedPatient.CPR,
                     selectedRekvisition.Rekvisitionsnr.ToString(),
                     selectedRekvisition.Dato.ToString(),
-                    selectedRekvisition.Billeder,
-                    sum
+                    selectedRekvisition.Billeder
                 );
 
                 this.Close();
-            }
-        }
-
-        private void pythonScript()
-        {
-            // full path of python interpreter
-            string python = @"C:\Users\Mikke\Anaconda3\python.exe";
-
-            // python app to call
-            string myPythonApp = @"C:\Users\Mikke\I7BAC\algorithmGUItest.py";
-
-
-
-            // Create new process start info 
-            ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
-
-            // make sure we can read the output from stdout 
-            myProcessStartInfo.UseShellExecute = false;
-            myProcessStartInfo.CreateNoWindow = true;
-            myProcessStartInfo.RedirectStandardOutput = true;
-
-            // start python app with 3 arguments  
-            // 1st argument is pointer to itself, 2nd and 3rd are actual arguments we want to send 
-            myProcessStartInfo.Arguments = myPythonApp;
-
-
-
-            Process myProcess = new Process();
-            // assign start information to the process 
-            myProcess.StartInfo = myProcessStartInfo;
-
-            // start process 
-            myProcess.Start();
-
-
-
-            // Read the standard output of the app we called.  
-            StreamReader myStreamReader = myProcess.StandardOutput;
-            string myString = myStreamReader.ReadLine();
-
-            // wait exit signal from the app we called 
-            myProcess.WaitForExit();
-
-            // close the process 
-            myProcess.Close();
-
-
-
-            // write the output we got from python app 
-            //Console.WriteLine("Value received from script: " + myString);
-
-            
-            if (myString != "")
-            {
-                sum = myString;
             }
         }
     }

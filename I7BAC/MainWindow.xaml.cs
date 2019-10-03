@@ -1,13 +1,11 @@
 ﻿using I7BAC.dto;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Xml.Serialization;
+using I7BAC.MachineLearning;
+using System.Threading.Tasks;
 
 namespace I7BAC
 {
@@ -22,20 +20,33 @@ namespace I7BAC
         public MainWindow()
         {
             InitializeComponent();
-            billedeListe = (BilledeListe) FindResource("BilledeListe");
- 
+            billedeListe = (BilledeListe)FindResource("BilledeListe");
+
             Aggregator.OnMessageTransmitted += OnMessageReceived;
+            Aggregator.OnPythonResultTransmitted += OnPythonResultReceived;
+        }
+
+        private void OnPythonResultReceived(string result)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                this.sum.Text = result;
+            });
         }
 
         private void ButtonHentPatient_OnClick(object sender, RoutedEventArgs e)
         {
             HentPatient hentPatient = new HentPatient();
-          
+
             hentPatient.Show();
         }
 
-        private void OnMessageReceived(string patientId, string rekvisitionsNr, string dato, BilledeListe billeder, string sum)
+        private void OnMessageReceived(string patientId, string rekvisitionsNr, string dato, BilledeListe billeder)
         {
+            this.sum.Text = "Behandler...";
+            Task.Run(() => PythonCaller.CallScript(billeder[0].URL));
+
+
             image = ImageBiopsi;
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
@@ -53,16 +64,18 @@ namespace I7BAC
                 billedeListe.Add(billede);
             }
 
-            this.patientId.Text =  patientId;
+            this.patientId.Text = patientId;
             this.rekvisitionsnr.Text = rekvisitionsNr;
             this.dato.Text = dato;
-            this.sum.Text = sum;
         }
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = (ListBox) sender;
-            var selectedBillede = (Billede) listBox.SelectedValue;
+            var listBox = (ListBox)sender;
+            var selectedBillede = (Billede)listBox.SelectedValue;
+
+            this.sum.Text = "Behandler...";
+            Task.Run(() => PythonCaller.CallScript(selectedBillede.URL));
 
             if (selectedBillede != null)
             {
