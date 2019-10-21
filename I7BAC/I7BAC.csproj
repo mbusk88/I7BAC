@@ -35,8 +35,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1367\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,10 +72,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Aggregator.cs" />
+    <Compile Include="Command\HentPatientCommand.cs" />
+    <Compile Include="Command\ImageChangedCommand.cs" />
+    <Compile Include="Command\PatientSelectionCommand.cs" />
+    <Compile Include="Command\RekvisionSelectionCommand.cs" />
     <Compile Include="Converter\ImageConverter.cs" />
-    <Compile Include="dto\BilledeListe.cs" />
-    <Compile Include="dto\Rekvisition.cs" />
-    <Compile Include="dto\RekvisitionListe.cs" />
+    <Compile Include="Model\BilledeListe.cs" />
+    <Compile Include="Model\Rekvisition.cs" />
+    <Compile Include="Model\RekvisitionListe.cs" />
+    <Compile Include="Viewmodel\HentPatientViewmodel.cs" />
+    <Compile Include="Viewmodel\MainWindowViewModel.cs" />
     <Page Include="HentPatient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -72,9 +94,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="dto\Billede.cs" />
-    <Compile Include="dto\Patient.cs" />
-    <Compile Include="dto\PatientListe.cs" />
+    <Compile Include="Model\Billede.cs" />
+    <Compile Include="Model\Patient.cs" />
+    <Compile Include="Model\PatientListe.cs" />
     <Compile Include="HentPatient.xaml.cs">
       <DependentUpon>HentPatient.xaml</DependentUpon>
     </Compile>
@@ -102,6 +124,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

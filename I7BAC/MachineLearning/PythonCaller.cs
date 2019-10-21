@@ -16,10 +16,9 @@ namespace I7BAC.MachineLearning
                 Byte[] info = new UTF8Encoding(true).GetBytes(path);
                 // Add some information to the file.
                 fs.Write(info, 0, info.Length);
-                fs.Close();
             }
             
-            string myPythonApp = @"C:\Users\Mikke\I7BAC\nyt.bat";
+            string myPythonApp = @"C:\Users\Mikke\I7BAC\startPython.bat";
 
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(myPythonApp);
 

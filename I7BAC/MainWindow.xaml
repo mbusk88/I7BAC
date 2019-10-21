@@ -3,37 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dto="clr-namespace:I7BAC.dto"
         xmlns:converter="clr-namespace:I7BAC.Converter"
+        xmlns:model="clr-namespace:I7BAC.Viewmodel"
         mc:Ignorable="d"
         Title="BCD" 
         WindowState="Maximized">
     <Window.Resources>
-        <dto:Billede x:Key="Billede"/>
-        <dto:BilledeListe x:Key="BilledeListe"/>
+        <model:MainWindowViewModel x:Key="MainWindowViewModel"/>
         <converter:ImageConverter x:Key="ImageConverter"/>
     </Window.Resources>
 
     <Border BorderBrush="Blue" BorderThickness="4">
-        <Grid>
+        <Grid DataContext="{StaticResource MainWindowViewModel}">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" >
-                    <Button Content="Hent patient" Name="BtnHentPatient" Margin="10" Click="ButtonHentPatient_OnClick" Width="100" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Button Content="Hent patient" Name="BtnHentPatient" Margin="10" Command="{Binding HentPatient}" Width="100" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
                     <StackPanel Orientation="Horizontal">
                         <Label  Content="Patient ID:" Margin="12,12,12,0" VerticalAlignment="Top" Width="auto" Height="30" FontWeight="Bold"/>
-                        <TextBlock Name="patientId" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
+                        <TextBlock Name="patientId" Text="{Binding PatientId}" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
                         <Label Content="Rekvisitionsnr.:" Margin="12,12,12,0" VerticalAlignment="Top" Width="auto" Height="30" FontWeight="Bold"/>
-                        <TextBlock Name="rekvisitionsnr" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
+                        <TextBlock Name="rekvisitionsnr" Text="{Binding Rekvisitionsnr}" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
                         <Label Content="Dato:" Margin="12,12,12,0" VerticalAlignment="Top" Width="auto" Height="30" FontWeight="Bold"/>
-                        <TextBlock Name="dato" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
+                        <TextBlock Name="dato" Text="{Binding Dato}" Margin="12,17,12,0" VerticalAlignment="Top" Height="30"/>
                     </StackPanel>
                     <Label Content="Kategori:" Margin="100,12,12,12" Width="100" Height="40" FontWeight="Bold"/>
-                    <TextBlock Name="sum" Margin="6,17,12,12" VerticalAlignment="Top" Height="30"/>
+                    <TextBlock Name="sum" Text="{Binding Sum}" Margin="6,17,12,12" VerticalAlignment="Top" Height="30"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20">
-                    <ListBox Margin="0,10,0,0"  BorderBrush="Transparent" ItemsSource="{StaticResource BilledeListe }" SelectionChanged="Selector_OnSelectionChanged">
+                    <ListBox Margin="0,10,0,0"  BorderBrush="Transparent" SelectedIndex="{Binding SelectedImageIndex}" ItemsSource="{Binding BilledeListe}" SelectionChanged="Selector_OnSelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -42,7 +41,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Image Name="ImageBiopsi" Source="{Binding Path=Billede}" Height="800"  Margin="100,10,0,0" Width="1500"/>
+                    <Image Name="ImageBiopsi" Source="{Binding ImageSource}" Height="800"  Margin="100,10,0,0" Width="1500"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

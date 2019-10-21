@@ -3,25 +3,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dto="clr-namespace:I7BAC.dto"
+        xmlns:model="clr-namespace:I7BAC.Viewmodel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Patienter" Height="450" Width="800"
         WindowState="Maximized">
     <Window.Resources>
-        <dto:PatientListe x:Key="PatientListe"/>
-        <dto:RekvisitionListe x:Key="RekvisitionListe"/>
+        <model:HentPatientViewmodel x:Key="HentPatientViewmodel"/>
     </Window.Resources>
 
     <Border Padding="10">
-        <Grid>
+        <Grid DataContext="{StaticResource HentPatientViewmodel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Patientliste -->
-            <ListView Name="ListViewPatienter" MouseDoubleClick="ListViewPatienter_OnMouseDoubleClick" Grid.Column="0"
-                      ItemsSource="{StaticResource PatientListe}" Margin="10 0" MaxHeight="350" VerticalAlignment="Top">
+            <ListView Name="ListViewPatienter" Grid.Column="0" SelectedIndex="{Binding PatientIndex}"
+                      ItemsSource="{Binding PatientListe}" Margin="10 0" MaxHeight="350" VerticalAlignment="Top"
+                      MouseDoubleClick="ListViewPatienter_OnMouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -33,8 +34,9 @@
             </ListView>
 
             <!-- Rekvisitionsliste -->
-            <ListView Name="ListViewRekvisitioner" MouseDoubleClick="ListViewRekvisitioner_OnMouseDoubleClick" Grid.Column="1" 
-                      ItemsSource="{StaticResource RekvisitionListe}" Margin="10 0" MaxHeight="350" VerticalAlignment="Top">
+            <ListView Name="ListViewRekvisitioner" SelectedIndex="{Binding RekvisionIndex}" Grid.Column="1" 
+                      ItemsSource="{Binding RekvisitionListe}" Margin="10 0" MaxHeight="350" VerticalAlignment="Top"
+                      MouseDoubleClick="ListViewRekvisitioner_OnMouseDoubleClick">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>

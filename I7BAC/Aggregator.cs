@@ -1,5 +1,5 @@
 ﻿using System;
-using I7BAC.dto;
+using I7BAC.Model;
 
 namespace I7BAC
 {
